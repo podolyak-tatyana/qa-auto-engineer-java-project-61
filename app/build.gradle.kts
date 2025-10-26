@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.ben-manes.versions") version "0.53.0"
+    id("org.sonarqube") version "7.0.1.6134"
     application
 }
 
@@ -25,4 +26,10 @@ tasks.test {
 }
 tasks.getByName("run", JavaExec::class) {
     standardInput = System.`in`
+}
+sonar {
+    properties {
+        property("sonar.projectKey", "podolyak-tatyana_qa-auto-engineer-java-project-61")
+        property("sonar.organization", "podolyak-tatyana")
+    }
 }
