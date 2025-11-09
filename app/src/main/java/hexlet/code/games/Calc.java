@@ -36,18 +36,19 @@ public class Calc extends Engine {
         System.out.println("Question: " + a + " " + opSymbol + " " + b);
         int answer = getScanner().nextInt();
         System.out.println("Your answer: " + answer);
-        System.out.println(getResult(answer, result));
+        getResult(answer, result);
     }
 
-    private String getResult(int usersAnswer, int result) {
+    private void getResult(int usersAnswer, int result) {
         if (usersAnswer == result) {
             incrementCounter();  // вызвали счетчик из родительского класса
-            return "Correct!";
+            System.out.println("Correct!");
         } else {
-            return String.format("""
+            System.out.println(String.format("""
                     '%s' is wrong answer ;(. Correct answer was '%s'.
                     Let's try again, %s!
-                    """, usersAnswer, result, getUserName());
+                    """, usersAnswer, result, getUserName()));
+            System.exit(0);
         }
     }
 }

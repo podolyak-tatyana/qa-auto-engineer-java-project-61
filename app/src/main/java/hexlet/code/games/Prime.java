@@ -25,8 +25,10 @@ public class Prime extends Engine {
             incrementCounter();
         } else if (Answer.ERROR.equals(userAnswer)) {
             System.out.println(buildErrorMessage(userInput, isPrime));
+            System.exit(0);
         } else {
             System.out.println(buildErrorMessage(Answer.NO.value, isPrime));
+            System.exit(0);
         }
     }
 

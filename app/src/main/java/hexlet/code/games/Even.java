@@ -36,6 +36,7 @@ public class Even extends Engine {
             incrementCounter();
         } else {
             System.out.println(userAnswer.value + " is wrong answer ;(. Correct answer was '" + Answer.getValueByEven(isEven) + "'.\nLet's try again, " + userName + "!");
+            System.exit(0);
         }
     }
 }

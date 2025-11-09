@@ -34,7 +34,9 @@ public class Progression extends Engine {
             System.out.printf("""
                     '%s' is wrong answer ;(. Correct answer was '%s'.
                     Let's try again, %s!
-                    %n""", usersAnswer, hiddenNumber, getUserName());        }
+                    %n""", usersAnswer, hiddenNumber, getUserName());
+            System.exit(0);
+        }
 
     }
 

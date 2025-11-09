@@ -15,18 +15,19 @@ public class GCD extends Engine {
         System.out.println("Question: " + x + " " + y);
         int answer = getScanner().nextInt();
         System.out.println("Your answer: " + answer);
-        System.out.println(getResult(answer, gcd(x, y)));
+        getResult(answer, gcd(x, y));
     }
 
-    private String getResult(int usersAnswer, int gcd) {
+    private void getResult(int usersAnswer, int gcd) {
         if (usersAnswer == gcd) {
             incrementCounter();
-            return "Correct!";
+            System.out.println("Correct!");
         } else {
-            return String.format("""    
+            System.out.println(String.format("""    
                     '%s' is wrong answer ;(. Correct answer was '%s'.
                     Let's try again, %s!
-                    """, usersAnswer, gcd, getUserName());
+                    """, usersAnswer, gcd, getUserName()));
+            System.exit(0);
         }
     }
 
