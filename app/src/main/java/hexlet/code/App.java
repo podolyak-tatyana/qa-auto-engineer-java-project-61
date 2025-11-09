@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.games.Calc;
 import hexlet.code.games.Even;
+import hexlet.code.games.GCD;
 import hexlet.code.games.Greet;
 
 import java.util.Scanner;
@@ -15,6 +16,7 @@ public class App {
                 1 - Greet
                 2 - Even
                 3 - Calc
+                4 - GCD
                 0 - Exit
                 """);
 
@@ -24,6 +26,9 @@ public class App {
             case 1 -> new Greet();
             case 2 -> new Even();
             case 3 -> new Calc();
+            case 4 -> new GCD();
+         //   case 5 -> new ();
+           // case 6 -> new ();
             default -> System.out.println("Wrong number");
         }
     }

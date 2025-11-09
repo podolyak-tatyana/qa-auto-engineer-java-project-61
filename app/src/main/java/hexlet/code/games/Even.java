@@ -23,7 +23,6 @@ public class Even extends Engine {
             return;
         }
         checkAnswer(usersAnswer, isEven, getUserName());
-        System.out.println("Congratulations, " + getUserName() + "!");
     }
 
 

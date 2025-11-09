@@ -23,6 +23,7 @@ public abstract class Engine {
         while (counter < 3) {
             startRound();
         }
+        System.out.println("Congratulations, " + getUserName() + "!");
     }
 
     public void startRound() {
