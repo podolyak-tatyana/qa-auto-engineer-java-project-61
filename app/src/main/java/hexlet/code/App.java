@@ -27,7 +27,6 @@ public class App {
             case 3 -> new Calc();
             case 4 -> new GCD();
             case 5 -> new Progression();
-            case 6 -> new Prime();
             default -> System.out.println("Wrong number");
         }
     }
