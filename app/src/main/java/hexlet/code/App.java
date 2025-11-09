@@ -15,10 +15,11 @@ public class App {
                 3 - Calc
                 4 - GCD
                 5 - Progression
+                6 - Prime
                 0 - Exit
                 """);
 
-        var number = scanner.nextInt();     //выбираем игру
+        var number = scanner.nextInt();
         switch (number) {
             case 0 -> System.exit(0);
             case 1 -> new Greet();
@@ -26,7 +27,7 @@ public class App {
             case 3 -> new Calc();
             case 4 -> new GCD();
             case 5 -> new Progression();
-           // case 6 -> new ();
+            case 6 -> new Prime();
             default -> System.out.println("Wrong number");
         }
     }

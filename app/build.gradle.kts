@@ -1,8 +1,8 @@
 plugins {
     id("com.github.ben-manes.versions") version "0.53.0"
     id("org.sonarqube") version "7.0.1.6134"
-    checkstyle
-    application
+    id("checkstyle")
+    id("application")
 }
 
 group = "hexlet.code"
