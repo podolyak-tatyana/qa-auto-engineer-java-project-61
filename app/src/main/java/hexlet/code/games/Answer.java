@@ -5,10 +5,14 @@ public enum Answer {
     NO("no"),
     ERROR(null);
 
-    final String value;
+    private final String value;
 
     Answer(String answer) {
         this.value = answer;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     static String getValueByEven(boolean isEven) {
