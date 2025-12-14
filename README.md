@@ -1,5 +1,4 @@
-# Brain Games
-
+### Hexlet tests and linter status:
 [![Actions Status](https://github.com/podolyak-tatyana/qa-auto-engineer-java-project-61/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/podolyak-tatyana/qa-auto-engineer-java-project-61/actions)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=podolyak-tatyana_qa-auto-engineer-java-project-61&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=podolyak-tatyana_qa-auto-engineer-java-project-61)
 

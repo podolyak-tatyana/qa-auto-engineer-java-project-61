@@ -1,66 +1,55 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameRound;
+import hexlet.code.questions.BooleanQuestion;
 
-public class Prime extends Engine {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public final class Prime {
     public static final int NUMBER_VALUE = 99;
     public static final int INCREASE = 2;
     public static final int DIVIDER_THREE = 3;
 
-    /**
-     * Starts a round of the prime number game.
-     * Generates a random number and asks the user if it's prime.
-     */
-    @Override
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void startRound() {
-        int number = getRandom().nextInt(NUMBER_VALUE) + INCREASE;
+    private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+    private final Random random;
+    private final Engine engine;
+    private final int roundsNumber;
 
-        System.out.println("Answer 'yes' if given number is prime. Otherwise answer 'no'.");
-        System.out.println("Question: " + number);
-        String usersInput = getScanner().next();
-        System.out.println("Your answer: " + usersInput);
-        boolean isPrime = isPrime(number);
 
-        Answer userAnswer = Answer.getAnswerByValue(usersInput);
-
-        checkAnswer(userAnswer, isPrime, usersInput);
+    public Prime(Random injectedRandom,
+                 Engine injectedEngine,
+                 int roundsNumberValue) {
+        this.random = injectedRandom;
+        this.engine = injectedEngine;
+        this.roundsNumber = roundsNumberValue;
+        runGame();
     }
 
-    private void checkAnswer(Answer userAnswer, boolean isPrime, String userInput) {
-        if ((Answer.YES.equals(userAnswer) && isPrime) || (Answer.NO.equals(userAnswer) && !isPrime)) {
-            System.out.println("Correct!");
-            incrementCounter();
-        } else if (Answer.ERROR.equals(userAnswer)) {
-            System.out.println(buildErrorMessage(userInput, isPrime));
-            System.exit(0);
-        } else {
-            System.out.println(buildErrorMessage(Answer.NO.getValue(), isPrime));
-            System.exit(0);
-        }
+    public void runGame() {
+        engine.play(buildRound());
     }
 
-    private String buildErrorMessage(String userInput, boolean isPrime) {
-        return userInput + " is wrong answer ;(. Correct answer was '" + Answer.getValueByEven(isPrime) + "'.\n"
-                + "Let's try again, " + getUserName() + "!";
+    public GameRound<BooleanQuestion> buildRound() {
+        return new GameRound<>(TASK_DESCRIPTION, buildQuestions());
     }
 
-    private boolean isPrime(int n) {
-        if (n < 2) {
-            return false;
+
+    List<BooleanQuestion> buildQuestions() {
+        List<BooleanQuestion> questions = new ArrayList<>();
+        for (int i = 0; i < roundsNumber; i++) {
+            var question = buildEvenQuestion();
+            questions.add(question);
         }
-        if (n == 2) {
-            return true;
-        }
-        if (n % 2 == 0) {
-            return false;
-        }
-        // Проверяем делители только до sqrt(n), только нечётные
-        for (int i = DIVIDER_THREE; i <= n / i; i += 2) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+        return questions;
     }
+
+
+    public BooleanQuestion buildEvenQuestion() {
+        int number = random.nextInt(NUMBER_VALUE) + INCREASE;
+        return new BooleanQuestion(number, Answer.getValueByPrime(number));
+    }
+
 }
