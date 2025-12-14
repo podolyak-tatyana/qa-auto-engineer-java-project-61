@@ -30,6 +30,7 @@ public final class Engine {
                 handleError(q, result.userRawAnswer);
             }
         }
+        printMessage("Congratulations, " + userName + "!" );
     }
 
     private void handleError(Question q, String userRawAnswer) {
