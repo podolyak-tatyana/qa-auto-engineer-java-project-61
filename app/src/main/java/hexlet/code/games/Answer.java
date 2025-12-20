@@ -14,37 +14,41 @@ public enum Answer {
         this.number = numberValue;
     }
 
-    public Byte getNumber() {
-        return number;
+    public static Byte getValueByEven(Integer number) {
+        return number % 2 == 0 ? YES.number : NO.number;
     }
 
-    public static Answer getValueByEven(Integer number) {
-        return number % 2 == 0 ? YES : NO;
-    }
-
-    public static Answer getValueByPrime(int n) {
+    public static Byte getValueByPrime(int n) {
         if (n < 2) {
-            return NO;
+            return NO.number;
         }
         if (n == 2) {
-            return YES;
+            return YES.number;
         }
         if (n % 2 == 0) {
-            return NO;
+            return NO.number;
         }
         // Проверяем делители только до sqrt(n), только нечётные
         for (int i = DIVIDER_THREE; i <= n / i; i += 2) {
             if (n % i == 0) {
-                return NO;
+                return NO.number;
             }
         }
-        return YES;
+        return YES.number;
     }
 
-    public static Answer getAnswerByValue(String value) {
+    public static Byte getNumberByValue(String value) {
         return switch (value) {
-            case "yes" -> YES;
-            case "no" -> NO;
+            case "yes" -> YES.number;
+            case "no" -> NO.number;
+            default -> throw new IllegalArgumentException();
+        };
+    }
+
+    public static String getValueByNumber(Byte numberValue) {
+        return switch (numberValue) {
+            case 1 -> YES.value;
+            case 0 -> NO.value;
             default -> throw new IllegalArgumentException();
         };
     }

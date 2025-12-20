@@ -10,4 +10,9 @@ public final class StringQuestion extends Question {
     public Integer handleUsersValue(String usersValue) {
         return Integer.valueOf(usersValue);
     }
+
+    @Override
+    public String getAnswerDisplayValue() {
+        return getRightAnswer().toString();
+    }
 }

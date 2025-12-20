@@ -1,6 +1,5 @@
 package hexlet.code;
 
-
 import hexlet.code.questions.Question;
 
 import java.util.Scanner;
@@ -30,12 +29,12 @@ public final class Engine {
                 handleError(q, result.userRawAnswer);
             }
         }
-        printMessage("Congratulations, " + userName + "!" );
+        printMessage("Congratulations, " + userName + "!");
     }
 
     private void handleError(Question q, String userRawAnswer) {
         printMessage(userRawAnswer + " is wrong answer ;(. Correct answer was '"
-            + q.getRightAnswer() + "'.\nLet's try again, " + userName + "!");
+                + q.getAnswerDisplayValue() + "'.\nLet's try again, " + userName + "!");
         System.exit(0);
     }
 

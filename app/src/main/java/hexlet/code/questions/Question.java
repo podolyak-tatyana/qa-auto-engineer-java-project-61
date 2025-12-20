@@ -60,5 +60,7 @@ public abstract class Question<T> {
     public T getRightAnswer() {
         return rightAnswer;
     }
+
+    public abstract String getAnswerDisplayValue();
 }
 

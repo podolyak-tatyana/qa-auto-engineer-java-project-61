@@ -47,8 +47,6 @@ public final class Progression {
         return questions;
     }
 
-
-
     /**
      * Starts a round of the progression game.
      * Generates an arithmetic progression with a hidden number and asks the user to find it.
