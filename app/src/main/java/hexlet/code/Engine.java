@@ -1,99 +1,79 @@
 package hexlet.code;
 
-import java.util.Random;
+import hexlet.code.questions.Question;
+
 import java.util.Scanner;
 
-public abstract class Engine {
-    public static final int COUNTER = 3;
+public final class Engine {
+    private static final String ASC_NAME = """
+            Welcome to the Brain Games!
+            May I have your name?
+            """;
 
-    private final String userName;
-    private int counter = 0;
+    private static final String GREET = "Hello, %s!\n";
+    private String userName;
 
-    private final Scanner scanner;
-    private final Random random;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public final String initName() {
-        System.out.println("Welcome to the Brain Games!");
-        System.out.println("May I have your name?");
-        String name =  scanner.next();
-        System.out.println("Hello, " + name + "!");
-        return name;
-    }
-
-    /**
-     * Starts the game loop, running rounds until the counter reaches COUNTER.
-     * Calls startRound() which should be overridden by subclasses.
-     * Safe to extend - subclasses should override startRound() instead.
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void startGame() {
-        while (counter < COUNTER) {
-            startRound();
+    public void play(GameRound<? extends Question> gameRound) {
+        if (isNameEmpty()) {
+            greetUser();
         }
-
-        System.out.println("Congratulations, " + getUserName() + "!");
+        printMessage(gameRound.getTaskDescription());
+        for (Question q : gameRound.getQuestionList()) {
+            printMessage("Question: " + q.getGiven());
+            Result result = getResultFromUser(q);
+            if (result.userAnswer().equals(q.getRightAnswer())) {
+                printMessage("Correct!");
+            } else {
+                handleError(q, result.userRawAnswer);
+            }
+        }
+        printMessage("Congratulations, " + userName + "!");
     }
 
-    public void startRound() {
+    private void handleError(Question q, String userRawAnswer) {
+        printMessage(userRawAnswer + " is wrong answer ;(. Correct answer was '"
+                + q.getAnswerDisplayValue() + "'.\nLet's try again, " + userName + "!");
+        System.exit(0);
     }
 
-    public Engine() {
-        this.random = new Random();
-        this.scanner = new Scanner(System.in);
-        this.userName = initName();
-        startGame();
+    private Result getResultFromUser(Question q) {
+        var userRawAnswer = readStrValue();
+        try {
+            printMessage("Your answer: " + userRawAnswer);
+            Number userAnswer = q.handleUsersValue(userRawAnswer);
+            return new Result(userRawAnswer, userAnswer);
+        } catch (IllegalArgumentException e) {
+            handleError(q, userRawAnswer);
+            throw new IllegalStateException("Invalid user's value");
+        }
     }
 
-    /**
-     * Returns the user's name.
-     * Safe to call from subclasses.
-     *
-     * @return the user's name
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public String getUserName() {
-        return userName;
+
+    public String readStrValue() {
+        return scanner.next();
     }
 
-    /**
-     * Increments the game round counter.
-     * Safe to call from subclasses.
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void incrementCounter() {
-        this.counter++;
+    public void printMessage(String message) {
+        System.out.println(message);
     }
 
-    /**
-     * Sets the game round counter to a specific value.
-     * Safe to call from subclasses.
-     *
-     * @param value the value to set the counter to
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void setCounter(int value) {
-        this.counter = value;
+    void greetUser() {
+        printMessage(ASC_NAME);
+        this.userName = readStrValue();
+        System.out.printf(GREET, userName);
     }
 
-    /**
-     * Returns the Scanner instance for reading user input.
-     * Safe to call from subclasses.
-     *
-     * @return the Scanner instance
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public Scanner getScanner() {
-        return this.scanner;
+    // checking for multisession
+    boolean isNameEmpty() {
+        if (this.userName == null) {
+            return true;
+        }
+        return this.userName.isBlank();
     }
 
-    /**
-     * Returns the Random instance for generating random numbers.
-     * Safe to call from subclasses.
-     *
-     * @return the Random instance
-     */
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public Random getRandom() {
-        return random;
+    private record Result(String userRawAnswer, Number userAnswer) {
     }
+
 }

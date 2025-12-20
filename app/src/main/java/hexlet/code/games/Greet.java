@@ -1,17 +1,19 @@
 package hexlet.code.games;
 
+
 import hexlet.code.Engine;
+import hexlet.code.GameRound;
 
-public class Greet extends Engine {
-    public static final int COUNTER = 3;
+public final class Greet {
 
-    /**
-     * Starts a round of the greeting game.
-     * Sets the counter to the specified value.
-     */
-    @Override
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void startRound() {
-        setCounter(COUNTER);
+    private final Engine engine;
+
+    public Greet(Engine injectedEngine) {
+        this.engine = injectedEngine;
+        runGame();
+    }
+
+    public void runGame() {
+        engine.play(new GameRound());
     }
 }

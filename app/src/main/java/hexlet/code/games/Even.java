@@ -1,46 +1,46 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.questions.BooleanQuestion;
+import hexlet.code.GameRound;
 
-public class Even extends Engine {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public final class Even {
     public static final int MAX_RANDOM_NUMBER = 100;
+    private static final String TASK_DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
 
-    /**
-     * Starts a round of the even number game.
-     * Generates a random number and asks the user if it's even.
-     */
-    @Override
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void startRound() {
-        System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
-        int randomNumber = getRandom().nextInt(MAX_RANDOM_NUMBER);
-        System.out.println("Question: " + randomNumber);
-        boolean isEven = isEven(randomNumber);
-        String input = getScanner().next().toLowerCase();
-        Answer usersAnswer = Answer.getAnswerByValue(input); // enum
+    private final Random random;
+    private final Engine engine;
+    private final int roundsNumber;
 
-        System.out.println("Your answer: " + input);
 
-        if (Answer.ERROR.equals(usersAnswer)) {
-            System.out.println(input + " is wrong answer ;(. Correct answer was '"
-                    + Answer.getValueByEven(isEven) + "'.\n Let's try again, " + getUserName() + "!");
-            return;
-        }
-        checkAnswer(usersAnswer, isEven, getUserName());
+    public Even(Random injectedRandom,
+                Engine injectedEngine,
+                int roundsNumberValue) {
+        this.random = injectedRandom;
+        this.engine = injectedEngine;
+        this.roundsNumber = roundsNumberValue;
+        runGame();
     }
 
-    private boolean isEven(int number) {
-        return number % 2 == 0;
+    public void runGame() {
+        engine.play(buildRound());
     }
 
-    private void checkAnswer(Answer userAnswer, boolean isEven, String userName) {
-        if ((Answer.YES.equals(userAnswer) && isEven) || (Answer.NO.equals(userAnswer) && !isEven)) {
-            System.out.println("Correct!");
-            incrementCounter();
-        } else {
-            System.out.println(userAnswer.getValue() + " is wrong answer ;(. Correct answer was '"
-                    + Answer.getValueByEven(isEven) + "'.\nLet's try again, " + userName + "!");
-            System.exit(0);
+    public GameRound<BooleanQuestion> buildRound() {
+        return new GameRound<>(TASK_DESCRIPTION, buildQuestions());
+    }
+
+    List<BooleanQuestion> buildQuestions() {
+        List<BooleanQuestion> questions = new ArrayList<>();
+        for (int i = 0; i < roundsNumber; i++) {
+            int randomNumber = random.nextInt(MAX_RANDOM_NUMBER);
+            questions.add(new BooleanQuestion(randomNumber,
+                    Answer.getValueByEven(randomNumber)));
         }
+        return questions;
     }
 }

@@ -1,24 +1,62 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.GameRound;
+import hexlet.code.questions.StringQuestion;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
-public class Calc extends Engine {
+public final class Calc {
     public static final int RANDOM_VALUE = 10;
     public static final int THREE = 3;
+    public static final String TASK_DESCRIPTION = "What is the result of the expression?";
+
+    private final Random random;
+    private final Engine engine;
+    private final int roundsNumber;
+
+    public Calc(Random injectedRandom,
+                Engine injectedEngine,
+                int roundsNumberValue) {
+        this.random = injectedRandom;
+        this.engine = injectedEngine;
+        this.roundsNumber = roundsNumberValue;
+        runGame();
+    }
+
+    public void runGame() {
+        engine.play(buildRound());
+    }
+
+    public GameRound<StringQuestion> buildRound() {
+        return new GameRound<>(TASK_DESCRIPTION, buildQuestions());
+    }
+
+
+    List<StringQuestion> buildQuestions() {
+        List<StringQuestion> questions = new ArrayList<>();
+        for (int i = 0; i < roundsNumber; i++) {
+            var question = buildStringQuestion();
+            questions.add(question);
+        }
+        return questions;
+    }
 
     /**
-     * Starts a round of the calculator game.
-     * Generates two random numbers and an operation, asks the user for the result.
+     * Builds a single arithmetic question for the calculator game.
+     * Generates two random numbers and an operation and prepares the question.
+     *
+     * @return a StringQuestion containing the expression and the correct result
      */
-    @Override
-    @SuppressWarnings("checkstyle:DesignForExtension")
-    public void startRound() {
+    public StringQuestion buildStringQuestion() {
         // Генерируем два случайных числа (например, от 1 до 10)
-        int a = getRandom().nextInt(RANDOM_VALUE);
-        int b = getRandom().nextInt(RANDOM_VALUE);
+        int a = random.nextInt(RANDOM_VALUE);
+        int b = random.nextInt(RANDOM_VALUE);
         // Случайный выбор операции: 0 -> '+', 1 -> '-', 2 -> '*'
-        int operation = getRandom().nextInt(THREE);
+        int operation = random.nextInt(THREE);
 
         int result = 0;
         char opSymbol = ' ';
@@ -39,24 +77,7 @@ public class Calc extends Engine {
             default:
         }
 
-        System.out.println("What is the result of the expression?");
-
-        System.out.println("Question: " + a + " " + opSymbol + " " + b);
-        int answer = getScanner().nextInt();
-        System.out.println("Your answer: " + answer);
-        getResult(answer, result);
-    }
-
-    private void getResult(int usersAnswer, int result) {
-        if (usersAnswer == result) {
-            incrementCounter();  // вызвали счетчик из родительского класса
-            System.out.println("Correct!");
-        } else {
-            System.out.println(String.format("""
-                    '%s' is wrong answer ;(. Correct answer was '%s'.
-                    Let's try again, %s!
-                    """, usersAnswer, result, getUserName()));
-            System.exit(0);
-        }
+        var stringQuestion = a + " " + opSymbol + " " + b;
+        return new StringQuestion(stringQuestion, result);
     }
 }
