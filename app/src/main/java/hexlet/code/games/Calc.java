@@ -7,6 +7,7 @@ import static hexlet.code.Engine.run;
 
 public final class Calc {
     public static final int RANDOM_VALUE = 10;
+    public static final int TWO = 2;
     public static final int THREE = 3;
     public static final String TASK_DESCRIPTION = "What is the result of the expression?";
 
@@ -23,7 +24,7 @@ public final class Calc {
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[3][2];
+        String[][] round = new String[THREE][TWO];
         for (int i = 0; i < roundsNumber; i++) {
             var pair = buildStringQuestion();
             round[i] = pair;
@@ -38,7 +39,7 @@ public final class Calc {
      * @return a StringQuestion containing the expression and the correct result
      */
     public String[] buildStringQuestion() {
-        var pair = new String[2];
+        var pair = new String[TWO];
         // Генерируем два случайных числа (например, от 1 до 10)
         int a = random.nextInt(RANDOM_VALUE);
         int b = random.nextInt(RANDOM_VALUE);

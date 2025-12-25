@@ -10,8 +10,9 @@ public final class Progression {
     private static final int START_RANDOM_VALUE = 10;
     private static final int LENGTH_VALUE_MIN = 5;
     private static final int LENGTH_VALUE_MAX = 15;
-    private static final int STEP_VALUE = 3;
     private static final String TASK_DESCRIPTION = "What number is missing in the progression?";
+    public static final int TWO = 2;
+    public static final int THREE = 3;
 
     private final Random random = new Random();
     private final int roundsNumber;
@@ -26,7 +27,7 @@ public final class Progression {
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[3][2];
+        String[][] round = new String[THREE][TWO];
         for (int i = 0; i < roundsNumber; i++) {
             round[i] = buildPair();
         }
@@ -41,10 +42,10 @@ public final class Progression {
      * and the correct missing number as the answer
      */
     public String[] buildPair() {
-        String[] pair = new String[2];
+        String[] pair = new String[TWO];
         int start = random.nextInt(START_RANDOM_VALUE);
         int length = random.nextInt(LENGTH_VALUE_MIN, LENGTH_VALUE_MAX);
-        int step = random.nextInt(STEP_VALUE, START_RANDOM_VALUE);
+        int step = random.nextInt(THREE, START_RANDOM_VALUE);
         int hiddenIndex = random.nextInt(length);
 
         var sequenceList = generateSequence(start, length, step);
@@ -63,5 +64,4 @@ public final class Progression {
         }
         return result;
     }
-
 }

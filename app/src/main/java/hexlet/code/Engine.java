@@ -10,12 +10,12 @@ public final class Engine {
 
     private static final String GREET = "Hello, %s!\n";
     private static String userName;
-
-    private final static Scanner scanner = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static void run(String description, String[][] roundsData) {
-        if (isNameEmpty()) {
-            greetUser();
+        greetUser();
+        if (roundsData.length == 0) {
+            System.exit(0);
         }
         System.out.println(description);
         for (String[] round : roundsData) {
@@ -23,7 +23,7 @@ public final class Engine {
             var rightAnswer = round[1];
             System.out.println("Question: " + question);
             String usersAnswer = getResultFromUser(rightAnswer);
-            if (usersAnswer.equals(rightAnswer)) {
+            if (usersAnswer.equalsIgnoreCase(rightAnswer)) {
                 System.out.println("Correct!");
             } else {
                 handleError(rightAnswer, usersAnswer);
@@ -39,21 +39,14 @@ public final class Engine {
     }
 
     private static String getResultFromUser(String rightAnswer) {
-        var userRawAnswer = scanner.next();
+        var userRawAnswer = SCANNER.next();
         System.out.println("Your answer: " + userRawAnswer);
         return userRawAnswer;
     }
 
     static void greetUser() {
         System.out.println(ASC_NAME);
-        userName = scanner.next();
+        userName = SCANNER.next();
         System.out.printf(GREET, userName);
-    }
-
-    static boolean isNameEmpty() {
-        if (userName == null) {
-            return true;
-        }
-        return userName.isBlank();
     }
 }

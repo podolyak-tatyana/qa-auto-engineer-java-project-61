@@ -7,7 +7,8 @@ import static hexlet.code.Engine.run;
 public final class Prime {
     public static final int NUMBER_VALUE = 99;
     public static final int INCREASE = 2;
-    public static final int DIVIDER_THREE = 3;
+    public static final int TWO = 2;
+    public static final int THREE = 3;
 
     private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
     private final Random random = new Random();
@@ -20,7 +21,7 @@ public final class Prime {
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[3][2];
+        String[][] round = new String[THREE][TWO];
         for (int i = 0; i < roundsNumber; i++) {
             var pair = buildPair();
             round[i] = pair;
@@ -29,7 +30,7 @@ public final class Prime {
     }
 
     public String[] buildPair() {
-        String[] pair = new String[2];
+        String[] pair = new String[TWO];
         int number = random.nextInt(NUMBER_VALUE) + INCREASE;
         pair[0] = String.valueOf(number);
         pair[1] = getRightAnswer(getValueByPrime(number));
@@ -52,7 +53,7 @@ public final class Prime {
             return Boolean.FALSE;
         }
         // Проверяем делители только до sqrt(n), только нечётные
-        for (int i = DIVIDER_THREE; i <= n / i; i += 2) {
+        for (int i = THREE; i <= n / i; i += TWO) {
             if (n % i == 0) {
                 return Boolean.FALSE;
             }
