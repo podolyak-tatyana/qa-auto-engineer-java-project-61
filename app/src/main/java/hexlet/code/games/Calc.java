@@ -1,12 +1,8 @@
 package hexlet.code.games;
 
-import hexlet.code.Engine;
-import hexlet.code.GameRound;
-import hexlet.code.questions.StringQuestion;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+
+import static hexlet.code.Engine.run;
 
 
 public final class Calc {
@@ -14,35 +10,25 @@ public final class Calc {
     public static final int THREE = 3;
     public static final String TASK_DESCRIPTION = "What is the result of the expression?";
 
-    private final Random random;
-    private final Engine engine;
+    private final Random random = new Random();
     private final int roundsNumber;
 
-    public Calc(Random injectedRandom,
-                Engine injectedEngine,
-                int roundsNumberValue) {
-        this.random = injectedRandom;
-        this.engine = injectedEngine;
+    public Calc(int roundsNumberValue) {
         this.roundsNumber = roundsNumberValue;
         runGame();
     }
 
     public void runGame() {
-        engine.play(buildRound());
+        run(TASK_DESCRIPTION, buildQuestions());
     }
 
-    public GameRound<StringQuestion> buildRound() {
-        return new GameRound<>(TASK_DESCRIPTION, buildQuestions());
-    }
-
-
-    List<StringQuestion> buildQuestions() {
-        List<StringQuestion> questions = new ArrayList<>();
+    String[][] buildQuestions() {
+        String[][] round = new String[3][2];
         for (int i = 0; i < roundsNumber; i++) {
-            var question = buildStringQuestion();
-            questions.add(question);
+            var pair = buildStringQuestion();
+            round[i] = pair;
         }
-        return questions;
+        return round;
     }
 
     /**
@@ -51,7 +37,8 @@ public final class Calc {
      *
      * @return a StringQuestion containing the expression and the correct result
      */
-    public StringQuestion buildStringQuestion() {
+    public String[] buildStringQuestion() {
+        var pair = new String[2];
         // Генерируем два случайных числа (например, от 1 до 10)
         int a = random.nextInt(RANDOM_VALUE);
         int b = random.nextInt(RANDOM_VALUE);
@@ -78,6 +65,8 @@ public final class Calc {
         }
 
         var stringQuestion = a + " " + opSymbol + " " + b;
-        return new StringQuestion(stringQuestion, result);
+        pair[0] = stringQuestion;
+        pair[1] = String.valueOf(result);
+        return pair;
     }
 }

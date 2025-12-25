@@ -1,7 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.questions.Question;
-
 import java.util.Scanner;
 
 public final class Engine {
@@ -11,69 +9,51 @@ public final class Engine {
             """;
 
     private static final String GREET = "Hello, %s!\n";
-    private String userName;
+    private static String userName;
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final static Scanner scanner = new Scanner(System.in);
 
-    public void play(GameRound<? extends Question> gameRound) {
+    public static void run(String description, String[][] roundsData) {
         if (isNameEmpty()) {
             greetUser();
         }
-        printMessage(gameRound.getTaskDescription());
-        for (Question q : gameRound.getQuestionList()) {
-            printMessage("Question: " + q.getGiven());
-            Result result = getResultFromUser(q);
-            if (result.userAnswer().equals(q.getRightAnswer())) {
-                printMessage("Correct!");
+        System.out.println(description);
+        for (String[] round : roundsData) {
+            var question = round[0];
+            var rightAnswer = round[1];
+            System.out.println("Question: " + question);
+            String usersAnswer = getResultFromUser(rightAnswer);
+            if (usersAnswer.equals(rightAnswer)) {
+                System.out.println("Correct!");
             } else {
-                handleError(q, result.userRawAnswer);
+                handleError(rightAnswer, usersAnswer);
             }
         }
-        printMessage("Congratulations, " + userName + "!");
+        System.out.println("Congratulations, " + userName + "!");
     }
 
-    private void handleError(Question q, String userRawAnswer) {
-        printMessage(userRawAnswer + " is wrong answer ;(. Correct answer was '"
-                + q.getAnswerDisplayValue() + "'.\nLet's try again, " + userName + "!");
+    private static void handleError(String rightAnswer, String userRawAnswer) {
+        System.out.println(userRawAnswer + " is wrong answer ;(. Correct answer was '"
+                + rightAnswer + "'.\nLet's try again, " + userName + "!");
         System.exit(0);
     }
 
-    private Result getResultFromUser(Question q) {
-        var userRawAnswer = readStrValue();
-        try {
-            printMessage("Your answer: " + userRawAnswer);
-            Number userAnswer = q.handleUsersValue(userRawAnswer);
-            return new Result(userRawAnswer, userAnswer);
-        } catch (IllegalArgumentException e) {
-            handleError(q, userRawAnswer);
-            throw new IllegalStateException("Invalid user's value");
-        }
+    private static String getResultFromUser(String rightAnswer) {
+        var userRawAnswer = scanner.next();
+        System.out.println("Your answer: " + userRawAnswer);
+        return userRawAnswer;
     }
 
-
-    public String readStrValue() {
-        return scanner.next();
-    }
-
-    public void printMessage(String message) {
-        System.out.println(message);
-    }
-
-    void greetUser() {
-        printMessage(ASC_NAME);
-        this.userName = readStrValue();
+    static void greetUser() {
+        System.out.println(ASC_NAME);
+        userName = scanner.next();
         System.out.printf(GREET, userName);
     }
 
-    // checking for multisession
-    boolean isNameEmpty() {
-        if (this.userName == null) {
+    static boolean isNameEmpty() {
+        if (userName == null) {
             return true;
         }
-        return this.userName.isBlank();
+        return userName.isBlank();
     }
-
-    private record Result(String userRawAnswer, Number userAnswer) {
-    }
-
 }

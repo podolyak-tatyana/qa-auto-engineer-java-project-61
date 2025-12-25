@@ -1,12 +1,8 @@
 package hexlet.code.games;
 
-import hexlet.code.Engine;
-import hexlet.code.GameRound;
-import hexlet.code.questions.BooleanQuestion;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+
+import static hexlet.code.Engine.run;
 
 public final class Prime {
     public static final int NUMBER_VALUE = 99;
@@ -14,42 +10,54 @@ public final class Prime {
     public static final int DIVIDER_THREE = 3;
 
     private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
-    private final Random random;
-    private final Engine engine;
+    private final Random random = new Random();
     private final int roundsNumber;
 
 
-    public Prime(Random injectedRandom,
-                 Engine injectedEngine,
-                 int roundsNumberValue) {
-        this.random = injectedRandom;
-        this.engine = injectedEngine;
+    public Prime(int roundsNumberValue) {
         this.roundsNumber = roundsNumberValue;
-        runGame();
+        run(TASK_DESCRIPTION, buildQuestions());
     }
 
-    public void runGame() {
-        engine.play(buildRound());
-    }
-
-    public GameRound<BooleanQuestion> buildRound() {
-        return new GameRound<>(TASK_DESCRIPTION, buildQuestions());
-    }
-
-
-    List<BooleanQuestion> buildQuestions() {
-        List<BooleanQuestion> questions = new ArrayList<>();
+    String[][] buildQuestions() {
+        String[][] round = new String[3][2];
         for (int i = 0; i < roundsNumber; i++) {
-            var question = buildEvenQuestion();
-            questions.add(question);
+            var pair = buildPair();
+            round[i] = pair;
         }
-        return questions;
+        return round;
+    }
+
+    public String[] buildPair() {
+        String[] pair = new String[2];
+        int number = random.nextInt(NUMBER_VALUE) + INCREASE;
+        pair[0] = String.valueOf(number);
+        pair[1] = getRightAnswer(getValueByPrime(number));
+        return pair;
     }
 
 
-    public BooleanQuestion buildEvenQuestion() {
-        int number = random.nextInt(NUMBER_VALUE) + INCREASE;
-        return new BooleanQuestion(number, Answer.getValueByPrime(number));
+    public static String getRightAnswer(Boolean value) {
+        return value ? "yes" : "no";
+    }
+
+    public static Boolean getValueByPrime(int n) {
+        if (n < 2) {
+            return Boolean.FALSE;
+        }
+        if (n == 2) {
+            return Boolean.TRUE;
+        }
+        if (n % 2 == 0) {
+            return Boolean.FALSE;
+        }
+        // Проверяем делители только до sqrt(n), только нечётные
+        for (int i = DIVIDER_THREE; i <= n / i; i += 2) {
+            if (n % i == 0) {
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
     }
 
 }

@@ -1,19 +1,15 @@
 package hexlet.code.games;
 
 
-import hexlet.code.Engine;
-import hexlet.code.GameRound;
+import static hexlet.code.Engine.run;
 
 public final class Greet {
 
-    private final Engine engine;
-
-    public Greet(Engine injectedEngine) {
-        this.engine = injectedEngine;
+    public Greet() {
         runGame();
     }
 
     public void runGame() {
-        engine.play(new GameRound());
+        run(null, new String[0][0]);
     }
 }
