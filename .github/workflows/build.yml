@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     name: Build and analyze
-    working-directory: app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,5 +34,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run:  |
+          cd app
           chmod +x ./gradlew
           ./gradlew build sonar --info
