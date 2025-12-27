@@ -6,3 +6,5 @@ install: build
 
 run-dist: install
 	./build/install/app/bin/app
+
+.PHONY:build

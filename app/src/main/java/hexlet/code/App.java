@@ -1,9 +1,9 @@
 package hexlet.code;
 
 import hexlet.code.games.Calc;
+import hexlet.code.games.Cli;
 import hexlet.code.games.Even;
 import hexlet.code.games.GCD;
-import hexlet.code.games.Greet;
 import hexlet.code.games.Prime;
 import hexlet.code.games.Progression;
 
@@ -37,7 +37,7 @@ public class App {
         var number = scanner.nextInt();
         switch (number) {
             case ZERO -> System.exit(0);
-            case ONE -> new Greet();
+            case ONE -> Cli.greet();
             case TWO -> new Even(ROUNDS_NUMBER);
             case THREE -> new Calc(ROUNDS_NUMBER);
             case FOUR -> new GCD(ROUNDS_NUMBER);

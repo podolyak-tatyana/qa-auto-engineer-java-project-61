@@ -28,22 +28,12 @@ public final class Even {
         for (int i = 0; i < roundsNumber; i++) {
             int randomNumber = random.nextInt(MAX_RANDOM_NUMBER);
             round[i][0] = String.valueOf(randomNumber);
-            round[i][1] = getRightAnswer(getValueByEven(randomNumber));
+            round[i][1] = isEven(randomNumber) ? "yes" : "no";
         }
         return round;
     }
 
-
-    public static String getRightAnswer(Boolean value) {
-        return value ? "yes" : "no";
-//        if (value == Boolean.TRUE) {
-//            return "yes";
-//        }
-//        return "no";
-    }
-
-    public static Boolean getValueByEven(Integer number) {
+    public static boolean isEven(int number) {
         return number % 2 == 0 ? Boolean.TRUE : Boolean.FALSE;
     }
-
 }

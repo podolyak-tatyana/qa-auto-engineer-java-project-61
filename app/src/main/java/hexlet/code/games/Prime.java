@@ -33,16 +33,12 @@ public final class Prime {
         String[] pair = new String[TWO];
         int number = random.nextInt(NUMBER_VALUE) + INCREASE;
         pair[0] = String.valueOf(number);
-        pair[1] = getRightAnswer(getValueByPrime(number));
+        pair[1] = isPrime(number) ? "yes" : "no";
         return pair;
     }
 
 
-    public static String getRightAnswer(Boolean value) {
-        return value ? "yes" : "no";
-    }
-
-    public static Boolean getValueByPrime(int n) {
+    public static boolean isPrime(int n) {
         if (n < 2) {
             return Boolean.FALSE;
         }

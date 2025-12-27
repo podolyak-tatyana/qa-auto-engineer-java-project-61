@@ -10,7 +10,6 @@ public final class Engine {
 
     private static final String GREET = "Hello, %s!\n";
     private static String userName;
-    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static void run(String description, String[][] roundsData) {
         greetUser();
@@ -22,7 +21,7 @@ public final class Engine {
             var question = round[0];
             var rightAnswer = round[1];
             System.out.println("Question: " + question);
-            String usersAnswer = getResultFromUser(rightAnswer);
+            String usersAnswer = getResultFromUser();
             if (usersAnswer.equalsIgnoreCase(rightAnswer)) {
                 System.out.println("Correct!");
             } else {
@@ -38,15 +37,17 @@ public final class Engine {
         System.exit(0);
     }
 
-    private static String getResultFromUser(String rightAnswer) {
-        var userRawAnswer = SCANNER.next();
+    private static String getResultFromUser() {
+        Scanner scanner = new Scanner(System.in);
+        var userRawAnswer = scanner.next();
         System.out.println("Your answer: " + userRawAnswer);
         return userRawAnswer;
     }
 
     static void greetUser() {
         System.out.println(ASC_NAME);
-        userName = SCANNER.next();
+        Scanner scanner = new Scanner(System.in);
+        userName = scanner.next();
         System.out.printf(GREET, userName);
     }
 }

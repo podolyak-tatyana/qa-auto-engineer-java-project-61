@@ -43,6 +43,14 @@ public final class Calc {
         // Генерируем два случайных числа (например, от 1 до 10)
         int a = random.nextInt(RANDOM_VALUE);
         int b = random.nextInt(RANDOM_VALUE);
+
+        var result = calcOperation(a, b);
+        pair[0] = result.expression();
+        pair[1] = result.result();
+        return pair;
+    }
+
+    private OperationResult calcOperation(int a, int b) {
         // Случайный выбор операции: 0 -> '+', 1 -> '-', 2 -> '*'
         int operation = random.nextInt(THREE);
 
@@ -64,10 +72,10 @@ public final class Calc {
                 break;
             default:
         }
+        return new OperationResult(a + " " + opSymbol + " " + b,
+                String.valueOf(result));
+    }
 
-        var stringQuestion = a + " " + opSymbol + " " + b;
-        pair[0] = stringQuestion;
-        pair[1] = String.valueOf(result);
-        return pair;
+    private record OperationResult(String expression, String result) {
     }
 }
