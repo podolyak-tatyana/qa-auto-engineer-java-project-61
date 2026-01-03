@@ -3,19 +3,24 @@ package hexlet.code;
 import java.util.Scanner;
 
 public final class Engine {
-    private static final String ASC_NAME = """
+    public static final int ROUNDS_NUMBER = 3;
+    private static final String ASK_NAME = """
             Welcome to the Brain Games!
             May I have your name?
             """;
 
     private static final String GREET = "Hello, %s!\n";
-    private static String userName;
 
     public static void run(String description, String[][] roundsData) {
-        greetUser();
         if (roundsData.length == 0) {
             System.exit(0);
         }
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(ASK_NAME);
+        String userName = scanner.next();
+        System.out.println(String.format(GREET, userName));
+
         System.out.println(description);
         for (String[] round : roundsData) {
             var question = round[0];
@@ -25,13 +30,13 @@ public final class Engine {
             if (usersAnswer.equalsIgnoreCase(rightAnswer)) {
                 System.out.println("Correct!");
             } else {
-                handleError(rightAnswer, usersAnswer);
+                handleError(rightAnswer, usersAnswer, userName);
             }
         }
         System.out.println("Congratulations, " + userName + "!");
     }
 
-    private static void handleError(String rightAnswer, String userRawAnswer) {
+    private static void handleError(String rightAnswer, String userRawAnswer, String userName) {
         System.out.println(userRawAnswer + " is wrong answer ;(. Correct answer was '"
                 + rightAnswer + "'.\nLet's try again, " + userName + "!");
         System.exit(0);
@@ -42,12 +47,5 @@ public final class Engine {
         var userRawAnswer = scanner.next();
         System.out.println("Your answer: " + userRawAnswer);
         return userRawAnswer;
-    }
-
-    static void greetUser() {
-        System.out.println(ASC_NAME);
-        Scanner scanner = new Scanner(System.in);
-        userName = scanner.next();
-        System.out.printf(GREET, userName);
     }
 }

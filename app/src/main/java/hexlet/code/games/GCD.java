@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import java.util.Random;
 
+import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
 
 public final class GCD {
@@ -11,17 +12,14 @@ public final class GCD {
     public static final int THREE = 3;
 
     private final Random random = new Random();
-    private final int roundsNumber;
 
-
-    public GCD(int roundsNumberValue) {
-        this.roundsNumber = roundsNumberValue;
+    public GCD() {
         run(TASK_DESCRIPTION, buildQuestions());
     }
 
     String[][] buildQuestions() {
         String[][] round = new String[THREE][TWO];
-        for (int i = 0; i < roundsNumber; i++) {
+        for (int i = 0; i < ROUNDS_NUMBER; i++) {
             var pair = buildStringQuestion();
             round[i] = pair;
         }

@@ -10,7 +10,6 @@ import hexlet.code.games.Progression;
 import java.util.Scanner;
 
 public class App {
-    private static final int ROUNDS_NUMBER = 3;
     private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int TWO = 2;
@@ -38,11 +37,11 @@ public class App {
         switch (number) {
             case ZERO -> System.exit(0);
             case ONE -> Cli.greet();
-            case TWO -> new Even(ROUNDS_NUMBER);
-            case THREE -> new Calc(ROUNDS_NUMBER);
-            case FOUR -> new GCD(ROUNDS_NUMBER);
-            case FIFE -> new Progression(ROUNDS_NUMBER);
-            case SIX -> new Prime(ROUNDS_NUMBER);
+            case TWO -> new Even();
+            case THREE -> new Calc();
+            case FOUR -> new GCD();
+            case FIFE -> new Progression();
+            case SIX -> new Prime();
             default -> System.out.println("Unknown user choice: " + number);
         }
     }

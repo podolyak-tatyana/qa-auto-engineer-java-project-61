@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import java.util.Random;
 
+import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
 
 public final class Even {
@@ -11,11 +12,8 @@ public final class Even {
     public static final int THREE = 3;
 
     private final Random random = new Random();
-    private final int roundsNumber;
 
-
-    public Even(int roundsNumberValue) {
-        this.roundsNumber = roundsNumberValue;
+    public Even() {
         runGame();
     }
 
@@ -25,7 +23,7 @@ public final class Even {
 
     String[][] buildQuestions() {
         String[][] round = new String[THREE][TWO];
-        for (int i = 0; i < roundsNumber; i++) {
+        for (int i = 0; i < ROUNDS_NUMBER; i++) {
             int randomNumber = random.nextInt(MAX_RANDOM_NUMBER);
             round[i][0] = String.valueOf(randomNumber);
             round[i][1] = isEven(randomNumber) ? "yes" : "no";

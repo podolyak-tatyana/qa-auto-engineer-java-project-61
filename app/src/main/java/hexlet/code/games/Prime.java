@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import java.util.Random;
 
+import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
 
 public final class Prime {
@@ -12,17 +13,15 @@ public final class Prime {
 
     private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
     private final Random random = new Random();
-    private final int roundsNumber;
 
 
-    public Prime(int roundsNumberValue) {
-        this.roundsNumber = roundsNumberValue;
+    public Prime() {
         run(TASK_DESCRIPTION, buildQuestions());
     }
 
     String[][] buildQuestions() {
         String[][] round = new String[THREE][TWO];
-        for (int i = 0; i < roundsNumber; i++) {
+        for (int i = 0; i < ROUNDS_NUMBER; i++) {
             var pair = buildPair();
             round[i] = pair;
         }
