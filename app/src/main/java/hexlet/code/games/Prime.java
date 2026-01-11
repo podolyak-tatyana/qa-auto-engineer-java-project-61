@@ -9,6 +9,7 @@ public final class Prime {
     public static final int NUMBER_VALUE = 99;
     public static final int INCREASE = 2;
     public static final int TWO = 2;
+    public static final int START_DIVISOR = 3;
 
     private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
@@ -45,7 +46,7 @@ public final class Prime {
             return false;
         }
 
-        for (int i = ROUNDS_NUMBER; i <= n / i; i++) {
+        for (int i = START_DIVISOR; i <= n / i; i++) {
             if (i % 2 == 0) {
                 continue;
             }
