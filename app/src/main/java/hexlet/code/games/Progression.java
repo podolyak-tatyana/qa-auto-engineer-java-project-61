@@ -1,8 +1,9 @@
 package hexlet.code.games;
 
+import hexlet.code.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
@@ -13,8 +14,6 @@ public final class Progression {
     private static final int LENGTH_VALUE_MAX = 15;
     private static final String TASK_DESCRIPTION = "What number is missing in the progression?";
     public static final int TWO = 2;
-
-    private final Random random = new Random();
 
     public Progression() {
         runGame();
@@ -41,10 +40,10 @@ public final class Progression {
      */
     public String[] buildPair() {
         String[] pair = new String[TWO];
-        int start = random.nextInt(START_RANDOM_VALUE);
-        int length = random.nextInt(LENGTH_VALUE_MIN, LENGTH_VALUE_MAX);
-        int step = random.nextInt(ROUNDS_NUMBER, START_RANDOM_VALUE);
-        int hiddenIndex = random.nextInt(length);
+        int start = Utils.generateNumber(START_RANDOM_VALUE);
+        int length = Utils.generateNumber(LENGTH_VALUE_MIN, LENGTH_VALUE_MAX);
+        int step = Utils.generateNumber(ROUNDS_NUMBER, START_RANDOM_VALUE);
+        int hiddenIndex = Utils.generateNumber(length);
 
         var sequenceList = generateSequence(start, length, step);
         var hiddenNumber = sequenceList.get(hiddenIndex);

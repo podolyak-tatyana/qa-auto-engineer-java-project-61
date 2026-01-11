@@ -1,6 +1,7 @@
 package hexlet.code.games;
 
-import java.util.Random;
+
+import hexlet.code.utils.Utils;
 
 import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
@@ -9,10 +10,7 @@ import static hexlet.code.Engine.run;
 public final class Calc {
     public static final int MAX_VALUE = 10;
     public static final int TWO = 2;
-    public static final int THREE = 3;
     public static final String TASK_DESCRIPTION = "What is the result of the expression?";
-
-    private final Random random = new Random();
 
     public Calc() {
         runGame();
@@ -23,7 +21,7 @@ public final class Calc {
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[THREE][TWO];
+        String[][] round = new String[ROUNDS_NUMBER][TWO];
         for (int i = 0; i < ROUNDS_NUMBER; i++) {
             var pair = buildStringQuestion();
             round[i] = pair;
@@ -39,10 +37,10 @@ public final class Calc {
      */
     public String[] buildStringQuestion() {
         var pair = new String[TWO];
-        int a = generateNumber(0, MAX_VALUE);
-        int b = generateNumber(0, MAX_VALUE);
+        int a = Utils.generateNumber(MAX_VALUE);
+        int b = Utils.generateNumber(MAX_VALUE);
         final char[] operators = {'+', '-', '*'};
-        var indexOperator = generateNumber(0, operators.length);
+        var indexOperator = Utils.generateNumber(operators.length);
         var operator = operators[indexOperator];
 
         var result = calculate(a, b, operator);
@@ -58,10 +56,6 @@ public final class Calc {
             case '*' -> a * b;
             default -> 0;
         };
-    }
-
-    private int generateNumber(int min, int max) {
-        return random.nextInt(min, max);
     }
 }
 

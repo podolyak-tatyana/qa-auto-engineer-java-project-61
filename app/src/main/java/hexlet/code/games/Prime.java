@@ -1,6 +1,6 @@
 package hexlet.code.games;
 
-import java.util.Random;
+import hexlet.code.utils.Utils;
 
 import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
@@ -9,18 +9,15 @@ public final class Prime {
     public static final int NUMBER_VALUE = 99;
     public static final int INCREASE = 2;
     public static final int TWO = 2;
-    public static final int THREE = 3;
 
     private static final String TASK_DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
-    private final Random random = new Random();
-
 
     public Prime() {
         run(TASK_DESCRIPTION, buildQuestions());
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[THREE][TWO];
+        String[][] round = new String[ROUNDS_NUMBER][TWO];
         for (int i = 0; i < ROUNDS_NUMBER; i++) {
             var pair = buildPair();
             round[i] = pair;
@@ -30,7 +27,7 @@ public final class Prime {
 
     public String[] buildPair() {
         String[] pair = new String[TWO];
-        int number = random.nextInt(NUMBER_VALUE) + INCREASE;
+        int number = Utils.generateNumber(NUMBER_VALUE) + INCREASE;
         pair[0] = String.valueOf(number);
         pair[1] = isPrime(number) ? "yes" : "no";
         return pair;
@@ -39,21 +36,25 @@ public final class Prime {
 
     public static boolean isPrime(int n) {
         if (n < 2) {
-            return Boolean.FALSE;
+            return false;
         }
         if (n == 2) {
-            return Boolean.TRUE;
+            return true;
         }
         if (n % 2 == 0) {
-            return Boolean.FALSE;
+            return false;
         }
-        // Проверяем делители только до sqrt(n), только нечётные
-        for (int i = THREE; i <= n / i; i += TWO) {
+
+        for (int i = ROUNDS_NUMBER; i <= n / i; i++) {
+            if (i % 2 == 0) {
+                continue;
+            }
             if (n % i == 0) {
-                return Boolean.FALSE;
+                return false;
             }
         }
-        return Boolean.TRUE;
+        return true;
     }
+
 
 }

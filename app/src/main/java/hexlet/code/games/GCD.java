@@ -1,6 +1,6 @@
 package hexlet.code.games;
 
-import java.util.Random;
+import hexlet.code.utils.Utils;
 
 import static hexlet.code.Engine.ROUNDS_NUMBER;
 import static hexlet.code.Engine.run;
@@ -9,16 +9,13 @@ public final class GCD {
     private static final int RANDOM_VALUE_MAX = 50;
     private static final String TASK_DESCRIPTION = "Find the greatest common divisor of given numbers.";
     public static final int TWO = 2;
-    public static final int THREE = 3;
-
-    private final Random random = new Random();
 
     public GCD() {
         run(TASK_DESCRIPTION, buildQuestions());
     }
 
     String[][] buildQuestions() {
-        String[][] round = new String[THREE][TWO];
+        String[][] round = new String[ROUNDS_NUMBER][TWO];
         for (int i = 0; i < ROUNDS_NUMBER; i++) {
             var pair = buildStringQuestion();
             round[i] = pair;
@@ -33,8 +30,8 @@ public final class GCD {
      */
     public String[] buildStringQuestion() {
         String[] pair = new String[2];
-        int x = random.nextInt(RANDOM_VALUE_MAX) + 1;
-        int y = random.nextInt(RANDOM_VALUE_MAX) + 1;
+        int x = Utils.generateNumber(RANDOM_VALUE_MAX) + 1;
+        int y = Utils.generateNumber(RANDOM_VALUE_MAX) + 1;
 
         var question =  x + " " + y;
         pair[0] = question;
